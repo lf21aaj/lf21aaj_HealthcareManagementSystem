@@ -66,10 +66,12 @@ public class Referral
     {
         this.clinicalSummary = clinicalSummary;
     }
+
     public void setUrgency(String urgency)
     {
         this.urgency = urgency;
     }
+
     public void setStatus(String status)
     {
         this.status = status;
