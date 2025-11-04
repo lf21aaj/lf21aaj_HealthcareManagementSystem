@@ -84,6 +84,7 @@ public final class CSVUtil
                     continue;
                 }
                 rows.add(parseLine(line));
+                // TODO: Potential Fix - test ln 88
                 first = false;
             }
         }

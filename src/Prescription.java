@@ -1,5 +1,6 @@
-public class Prescription {
-    private String id;
+public class Prescription
+{
+    private String prescriptionId;
     private String patientId;
     private String clinicianId;
     private String drugName;
@@ -8,8 +9,10 @@ public class Prescription {
     private String pharmacy;
     private String status;
 
-    public Prescription(String id, String patientId, String clinicianId, String drugName, String dosage, String instructions, String pharmacy, String status) {
-        this.id = id;
+    public Prescription(String prescriptionId, String patientId, String clinicianId, String drugName, String dosage,
+                        String instructions, String pharmacy, String status)
+    {
+        this.prescriptionId = prescriptionId;
         this.patientId = patientId;
         this.clinicianId = clinicianId;
         this.drugName = drugName;
@@ -19,62 +22,42 @@ public class Prescription {
         this.status = status;
     }
 
-    public String getId() {
-        return id;
+    public String getPrescriptionId()
+    {
+        return prescriptionId;
     }
-
-    public String getPatiendId() {
+    public String getPatientId()
+    {
         return patientId;
     }
-
-    public String getClinicianId() {
+    public String getClinicianId()
+    {
         return clinicianId;
     }
-
     public String getDrugName()
     {
         return drugName;
     }
-
     public String getDosage()
     {
         return dosage;
     }
-
     public String getInstructions()
     {
         return instructions;
     }
-
     public String getPharmacy()
     {
         return pharmacy;
     }
-
     public String getStatus()
     {
         return status;
     }
 
-    // setters for edit actions in the GUI
-    public void setInstructions(String instructions)
-    {
-        this.instructions = instructions;
-    }
-
-    public void setStatus(String status)
-    {
-        this.status = status;
-    }
-
-    public void setPharmacy(String pharmacy)
-    {
-        this.pharmacy = pharmacy;
-    }
-
     @Override
     public String toString()
     {
-        return id + " | " + drugName + " (" + dosage + ") - " + status;
+        return String.format("%s | %s | %s | %s (%s) | %s", prescriptionId, patientId, clinicianId, drugName, dosage, instructions);
     }
 }

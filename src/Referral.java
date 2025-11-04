@@ -1,6 +1,6 @@
 public class Referral
 {
-    private String id;
+    private String referralId;
     private String patientId;
     private String gpId;
     private String reason;
@@ -8,10 +8,12 @@ public class Referral
     private String urgency;
     private String status;
     private String createdAt;
+    private String targetWorkplaceId;
 
-    public Referral(String id, String patientId, String gpId, String reason, String clinicalSummary, String urgency, String status, String createdAt)
+    public Referral(String referralId, String patientId, String gpId, String reason, String clinicalSummary, String urgency,
+                    String status, String createdAt, String targetWorkplaceId)
     {
-        this.id = id;
+        this.referralId = referralId;
         this.patientId = patientId;
         this.gpId = gpId;
         this.reason = reason;
@@ -19,67 +21,49 @@ public class Referral
         this.urgency = urgency;
         this.status = status;
         this.createdAt = createdAt;
+        this.targetWorkplaceId = targetWorkplaceId;
     }
 
-    public String getId()
+    public String getReferralId()
     {
-        return id;
+        return referralId;
     }
-
-    public String  getPatientId()
+    public String getPatientId()
     {
         return patientId;
     }
-
-    public String  getGpId()
+    public String getGpId()
     {
         return gpId;
     }
-
-    public String  getReason()
+    public String getReason()
     {
         return reason;
     }
-
-    public String  getClinicalSummary()
+    public String getClinicalSummary()
     {
         return clinicalSummary;
     }
-
-    public String  getUrgency()
+    public String getUrgency()
     {
         return urgency;
     }
-
-    public String  getStatus()
+    public String getStatus()
     {
         return status;
     }
-
-    public String  getCreatedAt()
+    public String getCreatedAt()
     {
         return createdAt;
     }
-
-    // setters for GUI edit actions
-    public void setClinicalSummary(String clinicalSummary)
+    public String getTargetWorkplaceId()
     {
-        this.clinicalSummary = clinicalSummary;
-    }
-
-    public void setUrgency(String urgency)
-    {
-        this.urgency = urgency;
-    }
-
-    public void setStatus(String status)
-    {
-        this.status = status;
+        return targetWorkplaceId;
     }
 
     @Override
     public String toString()
     {
-        return id + " | Patient: " + patientId + " | GP: " + gpId + " | " + urgency + " | " + status + " | " + reason;
+        return String.format("%s | %s | %s | %s (%s)", referralId, patientId, gpId, reason, urgency);
     }
 }

@@ -1,27 +1,31 @@
+
+
 public class Appointment
 {
-    private String id;
+    private String appointmentId;
     private String patientId;
     private String clinicianId;
     private String date;
     private String time;
     private String reason;
     private String status;
+    private String location;
 
-    public Appointment(String id, String patientId, String clinicianId, String date, String time, String reason, String status)
+    public Appointment(String patientId, String clinicianId, String date, String time, String reason,
+                       String status, String location)
     {
-        this.id = id;
         this.patientId = patientId;
         this.clinicianId = clinicianId;
         this.date = date;
         this.time = time;
         this.reason = reason;
         this.status = status;
+        this.location = location;
     }
 
-    public String getId()
+    public String getAppointmentId()
     {
-        return id;
+        return appointmentId;
     }
     public String getPatientId()
     {
@@ -47,16 +51,14 @@ public class Appointment
     {
         return status;
     }
-
-    // setter to update appointment status - to cancel or complete appointment
-    public void setStatus(String status)
+    public String getLocation()
     {
-        this.status = status;
+        return location;
     }
 
     @Override
     public String toString()
     {
-        return "Appointment " + id + " | Patient: " + patientId + " | Clinician: " + clinicianId + " | " + date + " " + time + " (" + status + ")";
+        return String.format("%s | %s | %s | %s %s", appointmentId, patientId, clinicianId, date, time);
     }
 }

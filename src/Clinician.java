@@ -1,49 +1,123 @@
 public class Clinician
 {
-    private String id;
-    private String name;
-    private String speciality;
-    private String role;
-    private String facility;
+    protected String clinicianId;
+    protected String firstName;
+    protected String lastName;
+    protected String title;
+    protected String speciality;
+    protected String gmcNumber;
+    protected String phoneNumber;
+    protected String email;
+    protected String workplaceId;
+    protected String workplaceType;
+    protected String employmentStatus;
+    protected String startDate;
 
-    public Clinician(String id, String name, String speciality, String role, String facility)
+    // constructor
+    public Clinician(String clinicianId, String firstName, String lastName, String title,
+                     String speciality, String gmcNumber, String phoneNumber, String email,
+                     String workplaceId, String workplaceType, String employmentStatus, String startDate)
     {
-        this.id = id;
-        this.name = name;
+        this.clinicianId = clinicianId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.title = title;
         this.speciality = speciality;
-        this.role = role;
-        this.facility = facility;
+        this.gmcNumber = gmcNumber;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.workplaceId = workplaceId;
+        this.workplaceType = workplaceType;
+        this.employmentStatus = employmentStatus;
+        this.startDate = startDate;
     }
 
-    public String getId()
+    public String getClinicianId()
     {
-        return id;
+        return clinicianId;
     }
-
-    public String getName()
+    public String getFirstName()
     {
-        return name;
+        return firstName;
     }
-
+    public String getLastName()
+    {
+        return lastName;
+    }
+    public String getTitle()
+    {
+        return title;
+    }
     public String getSpeciality()
     {
         return speciality;
     }
-
-    public String getRole()
+    public String getGmcNumber()
     {
-        return role;
+        return gmcNumber;
+    }
+    public String getPhoneNumber()
+    {
+        return phoneNumber;
+    }
+    public String getEmail()
+    {
+        return email;
+    }
+    public String getWorkplaceId()
+    {
+        return workplaceId;
+    }
+    public String getWorkplaceType()
+    {
+        return workplaceType;
+    }
+    public String getEmploymentStatus()
+    {
+        return employmentStatus;
+    }
+    public String getStartDate()
+    {
+        return startDate;
     }
 
-    public String getFacility()
+    public String getDisplayName()
     {
-        return facility;
+        return (title + " " + firstName + " " + lastName).trim();
     }
 
     @Override
     public String toString()
     {
-        String spec = (speciality == null || speciality.isBlank()) ? "" : " (" + speciality +")";
-        return name + " - " + role + spec;
+        return String.format("%s | %s | %s", clinicianId, getDisplayName(), speciality);
     }
 }
+
+// subclasses
+class GeneralPractitioner extends Clinician
+{
+    public GeneralPractitioner(String... fields)
+    {
+        super(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], fields[7], fields[8],
+                fields[9], fields[10], fields[11]);
+    }
+}
+
+class Nurse extends Clinician
+{
+    public Nurse(String... fields)
+    {
+        super(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], fields[7], fields[8],
+                fields[9], fields[10], fields[11]);
+    }
+}
+
+class SpecialistDoctor extends Clinician
+{
+    public SpecialistDoctor(String... fields)
+    {
+        super(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], fields[6], fields[7], fields[8],
+                fields[9], fields[10], fields[11]);
+    }
+}
+
