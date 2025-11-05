@@ -28,7 +28,7 @@ public final class PathsConfig
         PathsConfig.checkFile(REFERRALS_CSV);
         PathsConfig.checkFile(FACILITIES_CSV);
         PathsConfig.checkFile(STAFF_CSV);
-        System.out.println("Files verified.\n");
+        System.out.println("\nFiles verified.\n");
     }
 
     private static void checkFile(Path filePath)

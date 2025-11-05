@@ -1,27 +1,45 @@
+// TODO: FIX TO ADD AL ATTRIBUTES FROM CSV
+
+
 public class Referral
 {
     private String referralId;
     private String patientId;
-    private String gpId;
-    private String reason;
+    private String referringClinicianId;
+    private String referredToClinicianId;
+    private String referringFacilityId;
+    private String referredToFacilityId;
+    private String referralDate;
+    private String urgencyLevel;
+    private String referralReason;
     private String clinicalSummary;
-    private String urgency;
+    private String requestedInvestigations;
     private String status;
-    private String createdAt;
-    private String targetWorkplaceId;
+    private String appointmentId;
+    private String notes;
+    private String createdDate;
+    private String lastUpdated;
 
-    public Referral(String referralId, String patientId, String gpId, String reason, String clinicalSummary, String urgency,
-                    String status, String createdAt, String targetWorkplaceId)
+    public Referral(String referralId, String patientId, String referringClinicianId, String referredToClinicianId, String referringFacilityId,
+                    String referredToFacilityId, String referralDate, String urgencyLevel, String referralReason, String clinicalSummary,
+                    String requestedInvestigations, String status, String appointmentId, String notes, String createdDate, String lastUpdated)
     {
         this.referralId = referralId;
         this.patientId = patientId;
-        this.gpId = gpId;
-        this.reason = reason;
+        this.referringClinicianId = referringClinicianId;
+        this.referredToClinicianId = referredToClinicianId;
+        this.referringFacilityId = referringFacilityId;
+        this.referredToFacilityId = referredToFacilityId;
+        this.referralDate = referralDate;
+        this.urgencyLevel = urgencyLevel;
+        this.referralReason = referralReason;
         this.clinicalSummary = clinicalSummary;
-        this.urgency = urgency;
+        this.requestedInvestigations = requestedInvestigations;
         this.status = status;
-        this.createdAt = createdAt;
-        this.targetWorkplaceId = targetWorkplaceId;
+        this.appointmentId = appointmentId;
+        this.notes = notes;
+        this.createdDate = createdDate;
+        this.lastUpdated = lastUpdated;
     }
 
     public String getReferralId()
@@ -32,38 +50,68 @@ public class Referral
     {
         return patientId;
     }
-    public String getGpId()
+    public String getReferringClinicianId()
     {
-        return gpId;
+        return referringClinicianId;
     }
-    public String getReason()
+    public String getReferredToClinicianId()
     {
-        return reason;
+        return referredToClinicianId;
+    }
+    public String getReferringFacilityId()
+    {
+        return referringFacilityId;
+    }
+    public String getReferredToFacilityId()
+    {
+        return referredToFacilityId;
+    }
+    public String getReferralDate()
+    {
+        return referralDate;
+    }
+    public String getUrgencyLevel()
+    {
+        return urgencyLevel;
+    }
+    public String getReferralReason()
+    {
+        return referralReason;
     }
     public String getClinicalSummary()
     {
         return clinicalSummary;
     }
-    public String getUrgency()
+    public String getRequestedInvestigations()
     {
-        return urgency;
+        return requestedInvestigations;
     }
     public String getStatus()
     {
         return status;
     }
-    public String getCreatedAt()
+    public String getAppointmentId()
     {
-        return createdAt;
+        return appointmentId;
     }
-    public String getTargetWorkplaceId()
+    public String getNotes()
     {
-        return targetWorkplaceId;
+        return notes;
     }
+    public String getCreatedDate()
+    {
+        return createdDate;
+    }
+    public String getLastUpdated()
+    {
+        return lastUpdated;
+    }
+
+
 
     @Override
     public String toString()
     {
-        return String.format("%s | %s | %s | %s (%s)", referralId, patientId, gpId, reason, urgency);
+        return referralId + " | Patient: " + patientId + "Clinician: " + referredToClinicianId + "Facility: " + referredToFacilityId;
     }
 }

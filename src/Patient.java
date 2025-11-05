@@ -1,4 +1,3 @@
-
 public class Patient
 {
     private String patientId;
@@ -13,10 +12,12 @@ public class Patient
     private String postcode;
     private String emergencyContactName;
     private String emergencyContactPhone;
+    private String registrationDate;
+    private String gpSurgeryId;
 
     public Patient(String patientId, String firstName, String lastName, String dateOfBirth,
                    String nhsNumber, String gender, String phoneNumber, String email, String address,
-                   String postcode, String emergencyContactName, String emergencyContactPhone)
+                   String postcode, String emergencyContactName, String emergencyContactPhone, String registrationDate, String gpSurgeryId)
     {
         this.patientId = patientId;
         this.firstName = firstName;
@@ -30,6 +31,8 @@ public class Patient
         this.postcode = postcode;
         this.emergencyContactName = emergencyContactName;
         this.emergencyContactPhone = emergencyContactPhone;
+        this.registrationDate = registrationDate;
+        this.gpSurgeryId = gpSurgeryId;
     }
 
     public String getPatientId()
@@ -80,7 +83,14 @@ public class Patient
     {
         return emergencyContactPhone;
     }
-
+    public String getRegistrationDate()
+    {
+        return registrationDate;
+    }
+    public String getGpSurgeryId()
+    {
+        return gpSurgeryId;
+    }
     public String getFullName()
     {
         return (firstName + " " + lastName).trim();
@@ -89,6 +99,6 @@ public class Patient
     @Override
     public String toString()
     {
-        return String.format("%s | %s %s | NHS: %s", patientId, firstName, lastName, dateOfBirth, nhsNumber);
+        return patientId + " | " + getFullName() + " | NHS Number: " + nhsNumber;
     }
 }

@@ -1,3 +1,4 @@
+// TODO: FIX TO ADD AL ATTRIBUTES FROM CSV
 
 
 public class Appointment
@@ -5,60 +6,92 @@ public class Appointment
     private String appointmentId;
     private String patientId;
     private String clinicianId;
-    private String date;
-    private String time;
-    private String reason;
+    private String facilityId;
+    private String appointmentDate;
+    private String appointmentTime;
+    private String durationMinutes;
+    private String appointmentType;
+    private String reasonForVisit;
     private String status;
-    private String location;
+    private String notes;
+    private String createdDate;
+    private String lastModified;
 
-    public Appointment(String patientId, String clinicianId, String date, String time, String reason,
-                       String status, String location)
+    public Appointment(String appointmentId, String patientId, String clinicianId, String facilityId, String appointmentDate, String appointmentTime,
+                       String durationMinutes, String status, String appointmentType, String reasonForVisit, String notes, String createdDate, String lastModified)
     {
+        this.appointmentId = appointmentId;
         this.patientId = patientId;
         this.clinicianId = clinicianId;
-        this.date = date;
-        this.time = time;
-        this.reason = reason;
+        this.facilityId = facilityId;
+        this.appointmentDate = appointmentDate;
+        this.appointmentTime = appointmentTime;
+        this.durationMinutes = durationMinutes;
         this.status = status;
-        this.location = location;
+        this.appointmentType = appointmentType;
+        this.reasonForVisit = reasonForVisit;
+        this.notes = notes;
+        this.createdDate = createdDate;
+        this.lastModified = lastModified;
     }
 
-    public String getAppointmentId()
+    public String  getAppointmentId()
     {
         return appointmentId;
     }
-    public String getPatientId()
+    public String  getPatientId()
     {
         return patientId;
     }
-    public String getClinicianId()
+    public String  getClinicianId()
     {
         return clinicianId;
     }
-    public String getDate()
+    public String  getFacilityId()
     {
-        return date;
+        return facilityId;
     }
-    public String getTime()
+    public String  getAppointmentDate()
     {
-        return time;
+        return appointmentDate;
     }
-    public String getReason()
+    public String  getAppointmentTime()
     {
-        return reason;
+        return appointmentTime;
     }
-    public String getStatus()
+    public String  getDurationMinutes()
+    {
+        return durationMinutes;
+    }
+    public String  getAppointmentType()
+    {
+        return appointmentType;
+    }
+    public String  getReasonForVisit()
+    {
+        return reasonForVisit;
+    }
+    public String  getStatus()
     {
         return status;
     }
-    public String getLocation()
+    public String  getNotes()
     {
-        return location;
+        return notes;
     }
+    public String  getCreatedDate()
+    {
+        return createdDate;
+    }
+    public String  getLastModified()
+    {
+        return lastModified;
+    }
+
 
     @Override
     public String toString()
     {
-        return String.format("%s | %s | %s | %s %s", appointmentId, patientId, clinicianId, date, time);
+        return String.format("%s | %s | %s | %s %s", appointmentId, patientId, clinicianId, appointmentDate, appointmentTime);
     }
 }
