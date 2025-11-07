@@ -1,6 +1,3 @@
-// TODO: FIX TO ADD AL ATTRIBUTES FROM CSV
-
-
 public class Prescription
 {
     private String prescriptionId;

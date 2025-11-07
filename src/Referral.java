@@ -1,6 +1,3 @@
-// TODO: FIX TO ADD AL ATTRIBUTES FROM CSV
-
-
 public class Referral
 {
     private String referralId;
@@ -106,8 +103,6 @@ public class Referral
     {
         return lastUpdated;
     }
-
-
 
     @Override
     public String toString()

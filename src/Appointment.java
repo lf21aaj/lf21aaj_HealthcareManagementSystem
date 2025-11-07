@@ -1,6 +1,3 @@
-// TODO: FIX TO ADD AL ATTRIBUTES FROM CSV
-
-
 public class Appointment
 {
     private String appointmentId;
@@ -87,7 +84,6 @@ public class Appointment
     {
         return lastModified;
     }
-
 
     @Override
     public String toString()

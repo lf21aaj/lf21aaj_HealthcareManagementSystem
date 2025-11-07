@@ -84,7 +84,6 @@ public final class CSVUtil
                     continue;
                 }
                 rows.add(parseLine(line));
-                // TODO: Potential Fix - test ln 88
                 first = false;
             }
         }
@@ -102,5 +101,20 @@ public final class CSVUtil
             Files.writeString(path, headerIfNew + System.lineSeparator(), StandardCharsets.UTF_8, StandardOpenOption.CREATE);
         }
         Files.writeString(path, csvLine +  System.lineSeparator(), StandardCharsets.UTF_8, StandardOpenOption.APPEND);
+    }
+
+    // writes a CSV File with header and data lines), overwriting original file
+    // 'lines' includes header line as first line
+    public static void writeAll(java.nio.file.Path path, java.util.List<String> lines) throws java.io.IOException
+    {
+        java.nio.file.Files.createDirectories(path.getParent());
+        java.nio.file.Files.write(
+                path,
+                lines,
+                java.nio.charset.StandardCharsets.UTF_8,
+                java.nio.file.StandardOpenOption.CREATE,
+                java.nio.file.StandardOpenOption.TRUNCATE_EXISTING,
+                java.nio.file.StandardOpenOption.WRITE
+        );
     }
 }
