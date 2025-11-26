@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Collections;
 
-public class PatientRepository implements Repository<Patient, String>
+public class PatientsRepository implements Repository<Patient, String>
 {
     private final List<Patient> data = new ArrayList<>();
     private final Path path;
 
-    public PatientRepository(Path csvPath) throws IOException
+    public PatientsRepository(Path csvPath) throws IOException
     {
         this.path = csvPath;
         data.addAll(DataLoader.loadPatients());
