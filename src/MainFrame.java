@@ -5,11 +5,22 @@ import java.awt.*;
 public class MainFrame extends JFrame
 {
     private final PatientsController patientsController;
+    private final CliniciansController cliniciansController;
+
     private final DefaultTableModel patientsModel = new DefaultTableModel(
             new String[]{"ID","First","Last","DOB","NHS","Gender","Phone","Email","Address",
             "Postcode","EC Name","EC Phone","Reg Date","GP Surgery"
             }, 0
     );
+
+    private final DefaultTableModel cliniciansModel = new DefaultTableModel(
+            new String[]{"ID","First","Last","Title","Specialty","GMC No","Phone","Email",
+            "Workplace ID","Workplace Type","Employment Status","Start Date"
+            }, 0
+    );
+
+    private final JTable patientsTable = new JTable(patientsModel);
+    private final JTable cliniciansTable = new JTable(cliniciansModel);
 
     public MainFrame() throws Exception
     {
@@ -18,15 +29,21 @@ public class MainFrame extends JFrame
         setSize(1100, 700);
         setLocationRelativeTo(null);
 
-        var patientsRepo = new PatientsRepository(PathsConfig.PATIENTS_CSV);
-        this.patientsController = new PatientsController(patientsRepo);
+        PatientsRepository patientsRepo = new PatientsRepository(PathsConfig.PATIENTS_CSV);
+        CliniciansRepository cliniciansRepo = new CliniciansRepository(PathsConfig.CLINICIANS_CSV);
 
-        var tabs = new JTabbedPane();
+        this.patientsController = new PatientsController(patientsRepo);
+        this.cliniciansController = new CliniciansController(cliniciansRepo);
+
+        JTabbedPane tabs = new JTabbedPane();
         tabs.addTab("Patients", buildPatientsTab());
+        tabs.addTab("Clinicians", buildCliniciansTab());
+
         setContentPane(tabs);
 
-        // initial build
+        // initial builds
         refreshPatients();
+        refreshClinicians();
     }
 
     private JPanel buildPatientsTab()
@@ -89,21 +106,21 @@ public class MainFrame extends JFrame
     }
 
     private void addPatientDialog() {
-        String id   = JOptionPane.showInputDialog(this, "Patient ID:");
+        String id   = JOptionPane.showInputDialog(this, "Patient ID: ");
         if (id == null || id.isBlank()) return;
-        String fn   = JOptionPane.showInputDialog(this, "First name:");
-        String ln   = JOptionPane.showInputDialog(this, "Last name:");
-        String dob  = JOptionPane.showInputDialog(this, "Date of birth (YYYY-MM-DD):");
-        String nhs  = JOptionPane.showInputDialog(this, "NHS number:");
-        String gen  = JOptionPane.showInputDialog(this, "Gender:");
-        String ph   = JOptionPane.showInputDialog(this, "Phone:");
-        String em   = JOptionPane.showInputDialog(this, "Email:");
-        String addr = JOptionPane.showInputDialog(this, "Address:");
-        String pc   = JOptionPane.showInputDialog(this, "Postcode:");
-        String ecN  = JOptionPane.showInputDialog(this, "Emergency contact name:");
-        String ecP  = JOptionPane.showInputDialog(this, "Emergency contact phone:");
-        String reg  = JOptionPane.showInputDialog(this, "Registration date (YYYY-MM-DD):");
-        String gp   = JOptionPane.showInputDialog(this, "GP Surgery ID:");
+        String fn   = JOptionPane.showInputDialog(this, "First name: ");
+        String ln   = JOptionPane.showInputDialog(this, "Last name: ");
+        String dob  = JOptionPane.showInputDialog(this, "Date of birth (YYYY-MM-DD): ");
+        String nhs  = JOptionPane.showInputDialog(this, "NHS number: ");
+        String gen  = JOptionPane.showInputDialog(this, "Gender: ");
+        String ph   = JOptionPane.showInputDialog(this, "Phone: ");
+        String em   = JOptionPane.showInputDialog(this, "Email: ");
+        String addr = JOptionPane.showInputDialog(this, "Address: ");
+        String pc   = JOptionPane.showInputDialog(this, "Postcode: ");
+        String ecN  = JOptionPane.showInputDialog(this, "Emergency contact name: ");
+        String ecP  = JOptionPane.showInputDialog(this, "Emergency contact phone: ");
+        String reg  = JOptionPane.showInputDialog(this, "Registration date (YYYY-MM-DD): ");
+        String gp   = JOptionPane.showInputDialog(this, "GP Surgery ID: ");
 
         Patient p = new Patient(id, fn, ln, dob, nhs, gen, ph, em, addr, pc, ecN, ecP, reg, gp);
         patientsController.add(p);
@@ -113,6 +130,113 @@ public class MainFrame extends JFrame
                 .addRow(new Object[]{ id, fn, ln, dob, nhs, gen, ph, em, addr, pc, ecN, ecP, reg, gp });
     }
 
+    private JPanel buildCliniciansTab()
+    {
+        JPanel panel = new JPanel(new BorderLayout());
+
+        cliniciansTable.setAutoCreateRowSorter(true);
+
+        JButton addBtn = new JButton("Add Clinician");
+        JButton delBtn = new JButton("Delete Clinician");
+        JButton saveBtn = new JButton("Save CSV");
+
+        addBtn.addActionListener(e -> addClinicianDialog());
+
+        delBtn.addActionListener(e -> {
+            int row = cliniciansTable.getSelectedRow();
+            if (row < 0) { JOptionPane.showMessageDialog(this, "Please select a row."); return;}
+
+            int modelRow = cliniciansTable.convertRowIndexToModel(row);
+            String id = (String) cliniciansModel.getValueAt(modelRow, 0);
+            if (cliniciansController.delete(id))
+            {
+                cliniciansModel.removeRow(modelRow);
+            } else
+            {
+                JOptionPane.showMessageDialog(this, "Could not delete ID " +id);
+            }
+        });
+
+        saveBtn.addActionListener(e -> {
+            try
+            {
+                cliniciansController.save();
+                JOptionPane.showMessageDialog(this, "Saved.");
+            } catch (Exception ex) { showError(ex); }
+
+        });
+
+        JPanel buttons = new JPanel();
+        buttons.add(addBtn);
+        buttons.add(delBtn);
+        buttons.add(saveBtn);
+
+        panel.add(new JScrollPane(cliniciansTable), BorderLayout.CENTER);
+        panel.add(buttons, BorderLayout.SOUTH);
+        return panel;
+    }
+
+    private void refreshClinicians()
+    {
+        cliniciansModel.setRowCount(0);
+        for (Clinician c : cliniciansController.all())
+        {
+            cliniciansModel.addRow(new Object[]{
+                    c.getClinicianId(),
+                    c.getFirstName(),
+                    c.getLastName(),
+                    c.getTitle(),
+                    c.getSpeciality(),
+                    c.getGmcNumber(),
+                    c.getPhoneNumber(),
+                    c.getEmail(),
+                    c.getWorkplaceId(),
+                    c.getWorkplaceType(),
+                    c.getEmploymentStatus(),
+                    c.getStartDate()
+            });
+        }
+    }
+
+    private void addClinicianDialog()
+    {
+        String id = JOptionPane.showInputDialog(this, "Clinician ID: ");
+        if (id == null || id.isBlank()) return;
+
+        String fn = JOptionPane.showInputDialog(this, "First name: ");
+        if (fn == null) return;
+        String ln = JOptionPane.showInputDialog(this, "Last name: ");
+        if (ln == null) return;
+        String title = JOptionPane.showInputDialog(this, "Title: ");
+        if (title == null) return;
+        String speciality = JOptionPane.showInputDialog(this, "Speciality: ");
+        if (speciality == null) return;
+        String gmc =  JOptionPane.showInputDialog(this, "GMC number: ");
+        if (gmc == null) return;
+        String phone =  JOptionPane.showInputDialog(this, "Phone number: ");
+        if (phone == null) return;
+        String email =  JOptionPane.showInputDialog(this, "Email: ");
+        if (email == null) return;
+        String workplaceId = JOptionPane.showInputDialog(this, "Workplace ID: ");
+        if (workplaceId == null) return;
+        String workplaceType = JOptionPane.showInputDialog(this, "Workplace type: ");
+        if (workplaceType == null) return;
+        String status = JOptionPane.showInputDialog(this, "Employment status: ");
+        if (status == null) return;
+        String startDate = JOptionPane.showInputDialog(this, "Start date (YYYY-MM-DD): ");
+        if (startDate == null) return;
+
+        Clinician c = new Clinician(
+                id, fn, ln, title, speciality, gmc, phone, email,
+                workplaceId, workplaceType, status, startDate
+        );
+        cliniciansController.add(c);
+
+        cliniciansModel.addRow(new Object[]{
+                id, fn, ln, title, speciality, gmc, phone, email,
+                workplaceId, workplaceType, status, startDate
+        });
+    }
 
     private void showError(Exception e)
     {
