@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class PrescriptionsRepository implements Repository<Prescription, String> {
+public class PrescriptionsRepository implements Repository<Prescription, String>
+{
     private final List<Prescription> data = new ArrayList<>();
     private final Path path;
 
